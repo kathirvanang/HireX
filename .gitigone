@@ -1,0 +1,22 @@
+# Environment variables
+.env 
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo 
+
+# Virtual environment
+venv/
+.venv/
+
+# Django
+db.sqlite3
+*.log
+
+# IDE 
+.vscode/
+
+# OS
+.DS_Store
+Thums.db
