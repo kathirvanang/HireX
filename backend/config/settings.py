@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'api',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database user name password and other credentils are stored in .env file and loaded using python-dotenv 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hirex_db',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
