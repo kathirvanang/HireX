@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'accounts',
+    'resumes',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,8 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
