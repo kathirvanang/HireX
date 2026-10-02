@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 function Navbar() {
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -15,10 +17,19 @@ function Navbar() {
 
         <div>
           <a href="/">Home</a>
-          <a href="/login">Login</a>
-          <a href="/register">Register</a>
 
-          <button onClick={handleLogout}>Logout</button>
+          {token ? (
+            <>
+              <a href="/dashboard">Dashboard</a>
+
+              <button onClick={handleLogout}>Logout</button>
+            </>
+          ) : (
+            <>
+              <a href="/login">Login</a>
+              <a href="/register">Register</a>
+            </>
+          )}
         </div>
       </nav>
     </>

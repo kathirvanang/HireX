@@ -6,7 +6,7 @@ function Dashboard() {
 
         <nav>
           <a href="/dashboard">Dashboard</a>
-          <a href="#">Resume</a>
+          <a href="/resume">Resume</a>
           <a href="#">Job Matcher</a>
           <a href="#">Recommended Jobs</a>
           <a href="#">Skill Gap</a>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../services/api";
 
 function ResumeUpload() {
   const [file, setFile] = useState(null);
@@ -37,19 +38,38 @@ function ResumeUpload() {
 };
 
 
-  const handleAnalyze = () => {
-    if (!file) {
-      setError("Please choose your resume first.");
-      return;
-    }
-    setError("");
-    setLoading(true);
+ const handleAnalyze = async () => {
+  if (!file) {
+    setError("Please choose your resume first.");
+    return;
+  }
 
-    setTimeout(() => {
-        setLoading(false);
-        alert(`Resume selected: ${file.name}`);
-    },1500);
-    };
+  setError("");
+  setLoading(true);
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await api.post("resumes/upload/", formData);
+
+    setLoading(false);
+
+    alert(response.data.message);
+  }catch (error) {
+  setLoading(false);
+
+  console.log("UPLOAD ERROR:", error.response?.status);
+  console.log("UPLOAD DATA:", error.response?.data);
+  console.log("FULL ERROR:", error);
+
+  if (error.response?.status === 401) {
+    setError("Please login before uploading your resume.");
+  } else {
+    setError("Resume upload failed. Please try again.");
+  }
+}
+};
 
   return (
     <div className="resume-page">
