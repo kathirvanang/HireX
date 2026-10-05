@@ -60,6 +60,16 @@ class ResumeAnalysis(models.Model):
         blank=True
     )
 
+    strengths = models.JSONField(
+        default=list,
+        blank=True
+    )
+
+    suggestions = models.JSONField(
+        default=list,
+        blank=True
+    )
+
     resume_score = models.FloatField(
         default=0
     )

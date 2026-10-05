@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ResumeUpload from './pages/ResumeUpload';
 import ProtectedRoute from './ProtectedRoute';
+import ResumeAnalysis from './pages/ResumeAnalysis';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/resume" element={<ResumeUpload />} />
+          <Route path="/resume/:resumeId/analysis" element={<ProtectedRoute><ResumeAnalysis /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
    

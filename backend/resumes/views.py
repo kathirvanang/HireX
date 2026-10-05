@@ -45,9 +45,11 @@ def upload_resume(request):
         projects=analysis.get("projects", []),
         certifications=analysis.get("certifications", []),
         experience=analysis.get("experience", []),
-        resume_score=analysis.get("resume_score", 0)
-    )
+        resume_score=analysis.get("resume_score", 0),
 
+        strengths=analysis.get("strengths", []),
+        suggestions=analysis.get("suggestions", [])
+    )
     return Response(
         {
             "message": "Resume uploaded and text extracted successfully.",
@@ -85,4 +87,6 @@ def get_resume_analysis(request, resume_id):
         "certifications": analysis.certifications,
         "experience": analysis.experience,
         "resume_score": analysis.resume_score,
+        "strengths": analysis.strengths,
+        "suggestions": analysis.suggestions,
     })
