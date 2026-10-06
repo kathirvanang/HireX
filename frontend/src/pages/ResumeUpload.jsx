@@ -8,7 +8,7 @@ function ResumeUpload() {
 
   const handleFileChange = (event) => {
   const selectedFile = event.target.files[0];
-
+  
 
   if (!selectedFile) {
     return;

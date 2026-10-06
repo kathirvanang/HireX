@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import ResumeUpload from './pages/ResumeUpload';
 import ProtectedRoute from './ProtectedRoute';
 import ResumeAnalysis from './pages/ResumeAnalysis';
+import JobMatcher from './pages/JobMatcher';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/resume" element={<ResumeUpload />} />
           <Route path="/resume/:resumeId/analysis" element={<ProtectedRoute><ResumeAnalysis /></ProtectedRoute>} />
+          <Route path="/job_matcher" element={<ProtectedRoute><JobMatcher /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
    
