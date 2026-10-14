@@ -8,8 +8,8 @@ function Dashboard() {
           <a href="/dashboard">Dashboard</a>
           <a href="/resume">Resume</a>
           <a href="/job_matcher">Job Matcher</a>
-          <a href="#">Recommended Jobs</a>
-          <a href="#">Skill Gap</a>
+          <a href="/recommended_jobs">Recommended Jobs</a>
+          <a href="/skill_gap">Skill Gap</a>
           <a href="#">Learning Roadmap</a>
           <a href="#">History</a>
           <a href="#">Settings</a>

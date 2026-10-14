@@ -9,6 +9,8 @@ import ResumeUpload from './pages/ResumeUpload';
 import ProtectedRoute from './ProtectedRoute';
 import ResumeAnalysis from './pages/ResumeAnalysis';
 import JobMatcher from './pages/JobMatcher';
+import SkillGap from './pages/SkillGap';
+import RecommendedJobs from './pages/Recommended';
 
 function App() {
 
@@ -25,6 +27,8 @@ function App() {
           <Route path="/resume" element={<ResumeUpload />} />
           <Route path="/resume/:resumeId/analysis" element={<ProtectedRoute><ResumeAnalysis /></ProtectedRoute>} />
           <Route path="/job_matcher" element={<ProtectedRoute><JobMatcher /></ProtectedRoute>} />
+          <Route path="/skill_gap" element={<ProtectedRoute><SkillGap /></ProtectedRoute>} />
+          <Route path="/recommended_jobs" element={<ProtectedRoute><RecommendedJobs /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
    
