@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
+import {Link} from "react-router-dom";
 
 function ResumeAnalysis() {
   const { resumeId } = useParams();
@@ -45,6 +46,14 @@ function ResumeAnalysis() {
       </div>
     );
   }
+  if (!analysis) {
+  return (
+    <div className="analysis-state">
+      <h2>No resume analysis data found</h2>
+      <p>Please upload your resume again.</p>
+    </div>
+  );
+}
 
   const score = Number(analysis.resume_score || 0);
 
@@ -325,17 +334,21 @@ function ResumeAnalysis() {
                   {project.description}
                 </p>
 
-                {project.tech_stack && (
-                  <div className="project-tech">
-                    {project.tech_stack
-                      .split(",")
-                      .map((tech, techIndex) => (
-                        <span key={techIndex}>
-                          {tech.trim()}
-                        </span>
-                      ))}
-                  </div>
-                )}
+                {Array.isArray(project.tech_stack) &&
+                      project.tech_stack.length > 0 ? (
+                        <div className="project-tech">
+                          {project.tech_stack.map((tech, techIndex) => (
+                            <span key={techIndex}>{String(tech)}</span>
+                          ))}
+                        </div>
+                      ) : typeof project.tech_stack === "string" &&
+                        project.tech_stack.trim() !== "" ? (
+                        <div className="project-tech">
+                          {project.tech_stack.split(",").map((tech, techIndex) => (
+                            <span key={techIndex}>{tech.trim()}</span>
+                          ))}
+                        </div>
+                      ) : null}
 
               </article>
             )
@@ -492,6 +505,11 @@ function ResumeAnalysis() {
         </div>
 
       </section>
+            <div className="analysis-actions">
+                <Link to="/dashboard" className="dashboard-button">
+                  ← Back to Dashboard
+                </Link>
+            </div>
       
       <div className="analysis-note">
         <span>✦</span>

@@ -9,14 +9,28 @@ function RecommendedJobs() {
   const [matchingJobId, setMatchingJobId] = useState(null);
   const [matchResults, setMatchResults] = useState({});
 
+  // Fetch and rank recommended jobs
   useEffect(() => {
     const fetchRecommendedJobs = async () => {
       try {
         const response = await api.get("jobs/");
-        setJobs(response.data);
+        const receivedJobs = Array.isArray(response.data)
+          ? response.data
+          : [];
+
+        const sortedJobs = [...receivedJobs].sort(
+          (a, b) =>
+            (Number(b.match_score) || 0) -
+            (Number(a.match_score) || 0)
+        );
+
+        setJobs(sortedJobs);
       } catch (err) {
         console.error("RECOMMENDED JOBS ERROR:", err);
-        setError("Unable to load recommended jobs.");
+        setError(
+          err.response?.data?.error ||
+            "Unable to load recommended jobs."
+        );
       } finally {
         setLoading(false);
       }
@@ -25,25 +39,57 @@ function RecommendedJobs() {
     fetchRecommendedJobs();
   }, []);
 
+  // Match a job against the latest resume
   const handleMatch = async (jobId) => {
     setMatchingJobId(jobId);
     setError("");
 
     try {
       const response = await api.post(`jobs/${jobId}/match/`);
+      const result = response.data;
 
+      if (result.match_score === undefined || result.match_score === null) {
+        throw new Error("Match score was not returned by the server.");
+      }
+
+      const backendScore = Number(result.match_score);
+
+      if (!Number.isFinite(backendScore)) {
+        throw new Error("The server returned an invalid match score.");
+      }
+
+      // Save the detailed result
       setMatchResults((previous) => ({
         ...previous,
-        [jobId]: response.data,
+        [jobId]: result,
       }));
+
+      // Update the card score using the same backend score
+      setJobs((previousJobs) =>
+        previousJobs
+          .map((job) =>
+            job.id === jobId
+              ? { ...job, match_score: backendScore }
+              : job
+          )
+          .sort(
+            (a, b) =>
+              (Number(b.match_score) || 0) -
+              (Number(a.match_score) || 0)
+          )
+      );
     } catch (err) {
-      console.error("RECOMMENDED MATCH ERROR:", err.response?.data || err);
+      console.error(
+        "RECOMMENDED MATCH ERROR:",
+        err.response?.data || err
+      );
 
       if (err.response?.status === 401) {
         setError("Please log in again before matching your resume.");
       } else {
         setError(
           err.response?.data?.error ||
+            err.message ||
             "Unable to match your resume. Please try again."
         );
       }
@@ -85,6 +131,7 @@ function RecommendedJobs() {
           <span>Available Opportunities</span>
           <strong>{jobs.length}</strong>
         </div>
+
         <div>
           <span>Career Focus</span>
           <strong>Skill-Based</strong>
@@ -100,11 +147,19 @@ function RecommendedJobs() {
         </div>
       ) : (
         <div className="recommended-grid">
-          {jobs.map((job) => {
+          {jobs.map((job, index) => {
             const result = matchResults[job.id];
+            const score = Number(job.match_score);
+            const hasScore =
+              job.match_score !== undefined &&
+              job.match_score !== null &&
+              Number.isFinite(score);
 
             return (
-              <article className="recommended-card" key={job.id}>
+              <article
+                className="recommended-card"
+                key={job.id}
+              >
                 <div className="recommended-card-top">
                   <div className="recommended-company-icon">
                     {job.company?.charAt(0)?.toUpperCase() || "J"}
@@ -113,6 +168,20 @@ function RecommendedJobs() {
                   <span className="recommended-job-type">
                     {job.job_type}
                   </span>
+                </div>
+
+                <div className="recommended-ranking">
+                  {index === 0 && hasScore && (
+                    <span className="recommended-best-match">
+                      ★ Best Match
+                    </span>
+                  )}
+
+                  {hasScore && (
+                    <span className="recommended-score">
+                      {score.toFixed(2)}% Match
+                    </span>
+                  )}
                 </div>
 
                 <h2>{job.title}</h2>
@@ -128,8 +197,13 @@ function RecommendedJobs() {
                 </p>
 
                 <div className="recommended-skills">
-                  {(job.required_skills || []).map((skill) => (
-                    <span key={skill}>{skill}</span>
+                  {(Array.isArray(job.required_skills)
+                    ? job.required_skills
+                    : []
+                  ).map((skill, skillIndex) => (
+                    <span key={`${skill}-${skillIndex}`}>
+                      {skill}
+                    </span>
                   ))}
                 </div>
 
@@ -151,7 +225,7 @@ function RecommendedJobs() {
                     </p>
 
                     <h2>
-                      {result.match_score ?? result.match_percentage ?? 0}%
+                      {Number(result.match_score).toFixed(2)}%
                     </h2>
 
                     <p>
@@ -159,9 +233,13 @@ function RecommendedJobs() {
                     </p>
 
                     <div className="recommended-skills">
-                      {(result.matched_skills || []).map((skill) => (
-                        <span key={skill}>✓ {skill}</span>
-                      ))}
+                      {(result.matched_skills || []).map(
+                        (skill, skillIndex) => (
+                          <span key={`${skill}-${skillIndex}`}>
+                            ✓ {skill}
+                          </span>
+                        )
+                      )}
                     </div>
 
                     <p>
@@ -169,13 +247,17 @@ function RecommendedJobs() {
                     </p>
 
                     <div className="recommended-skills">
-                      {(result.missing_skills || []).map((skill) => (
-                        <span key={skill}>＋ {skill}</span>
-                      ))}
+                      {(result.missing_skills || []).map(
+                        (skill, skillIndex) => (
+                          <span key={`${skill}-${skillIndex}`}>
+                            ＋ {skill}
+                          </span>
+                        )
+                      )}
                     </div>
 
                     <Link
-                      to="/job-matcher"
+                      to="/job_matcher"
                       className="recommended-detail-link"
                     >
                       View all jobs →

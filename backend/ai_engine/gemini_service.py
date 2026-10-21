@@ -70,3 +70,60 @@ Resume:
     result = response.output_text
 
     return json.loads(result)
+
+# learning roadmap generation function
+
+def generate_learning_roadmap(resume_data, target_job):
+    prompt = f"""
+You are an expert full-stack developer mentor.
+
+Create a personalized 4-week learning roadmap using the
+candidate's resume and selected target job.
+
+RESUME DATA:
+{json.dumps(resume_data, ensure_ascii=False)}
+
+TARGET JOB:
+{json.dumps(target_job, ensure_ascii=False)}
+
+Return ONLY valid JSON with exactly this structure:
+
+{{
+    "target_job": "",
+    "current_skills": [],
+    "missing_skills": [],
+    "weeks": [
+        {{
+            "week": 1,
+            "title": "",
+            "goal": "",
+            "topics": [
+                {{
+                    "title": "",
+                    "description": "",
+                    "task": ""
+                }}
+            ]
+        }}
+    ]
+}}
+
+Rules:
+1. Generate exactly 4 weeks.
+2. Include 3 to 5 topics per week.
+3. Prioritize skills required by the target job that are
+   missing from the resume.
+4. Build on skills the candidate already knows.
+5. Include practical coding tasks and a final project.
+6. Keep the plan suitable for a beginner-to-intermediate learner.
+7. Do not claim the candidate has skills not listed in the resume.
+8. Do not invent job requirements.
+9. Return only valid JSON, without Markdown.
+"""
+
+    response = client.interactions.create(
+        model="gemini-3.5-flash-lite",
+        input=prompt
+    )
+
+    return json.loads(response.output_text)

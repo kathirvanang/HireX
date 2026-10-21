@@ -80,3 +80,32 @@ class ResumeAnalysis(models.Model):
 
     def __str__(self):
         return f"Analysis - {self.resume}"
+
+class RoadmapProgress(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="roadmap_progress"
+    )
+
+    job_id = models.PositiveIntegerField()
+
+    completed_topics = models.JSONField(
+        default=list,
+        blank=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "job_id"],
+                name="unique_user_roadmap_progress"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} - Job {self.job_id} Progress"

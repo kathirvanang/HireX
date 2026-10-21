@@ -11,6 +11,7 @@ import ResumeAnalysis from './pages/ResumeAnalysis';
 import JobMatcher from './pages/JobMatcher';
 import SkillGap from './pages/SkillGap';
 import RecommendedJobs from './pages/Recommended';
+import LearningRoadmap from './pages/LearningRoadmap';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/resume/:resumeId/analysis" element={<ProtectedRoute><ResumeAnalysis /></ProtectedRoute>} />
           <Route path="/job_matcher" element={<ProtectedRoute><JobMatcher /></ProtectedRoute>} />
           <Route path="/skill_gap" element={<ProtectedRoute><SkillGap /></ProtectedRoute>} />
+          <Route path="/learning_roadmap" element={<ProtectedRoute><LearningRoadmap /></ProtectedRoute>} />
           <Route path="/recommended_jobs" element={<ProtectedRoute><RecommendedJobs /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
