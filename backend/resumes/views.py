@@ -295,3 +295,37 @@ def roadmap_progress(request):
         },
         status=status.HTTP_200_OK,
     )
+
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_resume_history(request):
+    resumes = (
+        Resume.objects.filter(user=request.user)
+        .order_by("-uploaded_at", "-id")
+    )
+
+    history = []
+
+    for resume in resumes:
+        analysis = (
+            ResumeAnalysis.objects.filter(resume=resume)
+            .order_by("-id")
+            .first()
+        )
+
+        history.append({
+            "resume_id": resume.id,
+            "file_name": resume.file.name,
+            "uploaded_at": resume.uploaded_at,
+            "resume_score": (
+                analysis.resume_score if analysis else None
+            ),
+            "skills": analysis.skills if analysis else [],
+            "name": analysis.extracted_name if analysis else "",
+        })
+
+    return Response({
+        "count": len(history),
+        "results": history,
+    }, status=status.HTTP_200_OK)

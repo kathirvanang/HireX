@@ -85,7 +85,7 @@ function Dashboard() {
           <Link to="/recommended_jobs">Recommended Jobs</Link>
           <Link to="/skill_gap">Skill Gap</Link>
           <Link to="/learning_roadmap">Learning Roadmap</Link>
-          <a href="#">History</a>
+          <Link to="/history">History</Link>
           <a href="#">Settings</a>
         </nav>
       </aside>
