@@ -1,0 +1,838 @@
+/* =========================================
+   HIREX DASHBOARD LAYOUT
+========================================= */
+
+:root {
+  --hirex-navy: #101b3d;
+  --hirex-blue: #2563eb;
+  --hirex-cyan: #06b6d4;
+  --hirex-text: #172554;
+  --hirex-muted: #64748b;
+  --hirex-bg: #f4f7fc;
+  --hirex-border: #e2e8f0;
+
+  --hirex-sidebar-width: 255px;
+  --hirex-topbar-height: 70px;
+}
+
+.dashboard-layout,
+.dashboard-layout * {
+  box-sizing: border-box;
+}
+
+.dashboard-layout {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: calc(100vh - var(--hirex-topbar-height));
+  min-height: calc(100dvh - var(--hirex-topbar-height));
+  margin: 0;
+  padding: 0;
+  background: var(--hirex-bg);
+  color: var(--hirex-text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.dashboard-layout .dashboard-sidebar {
+  position: fixed;
+  top: var(--hirex-topbar-height);
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+
+  width: var(--hirex-sidebar-width);
+  height: calc(100vh - var(--hirex-topbar-height));
+  height: calc(100dvh - var(--hirex-topbar-height));
+
+  margin: 0;
+  padding: 26px 15px 18px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(37, 99, 235, 0.3),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      #101b3d 0%,
+      #142d60 55%,
+      #103f80 100%
+    );
+
+  color: #fff;
+  box-shadow: 5px 0 25px rgba(15, 23, 42, 0.1);
+}
+
+/* BRAND */
+
+.dashboard-layout .dashboard-brand {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: fit-content;
+  margin: 0 12px 35px;
+
+  color: #fff;
+  font-size: 30px;
+  font-weight: 850;
+  letter-spacing: -1.4px;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.dashboard-layout .dashboard-brand span {
+  color: #38bdf8;
+}
+
+/* SECTION LABEL */
+
+.dashboard-layout .sidebar-label {
+  flex: 0 0 auto;
+  margin: 0 12px 14px;
+
+  color: #91a9d5;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* NAVIGATION - INDEPENDENT SCROLL */
+
+.dashboard-layout .dashboard-menu {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 7px;
+
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0 3px 12px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #5274a8 transparent;
+}
+
+.dashboard-layout .dashboard-menu-link {
+  position: relative;
+
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  min-height: 46px;
+  margin: 0;
+  padding: 12px 13px;
+
+  border: 1px solid transparent;
+  border-radius: 12px;
+
+  color: #d8e5ff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+
+  transition: background 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, transform 0.2s ease;
+}
+
+.dashboard-layout .dashboard-menu-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.07);
+  transform: translateX(3px);
+}
+
+.dashboard-layout .dashboard-menu-link.active {
+  color: #fff;
+  background: linear-gradient(110deg, #087cf0, #06b6d4);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 7px 20px rgba(6, 182, 212, 0.24);
+}
+
+.dashboard-layout .dashboard-menu-link:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 2px;
+}
+
+.dashboard-layout .dashboard-menu-icon {
+  display: inline-flex;
+  flex: 0 0 24px;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+/* SIDEBAR FOOTER */
+
+.dashboard-layout .sidebar-footer {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 11px;
+
+  margin-top: 10px;
+  padding: 17px 8px 4px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.dashboard-layout .sidebar-footer-icon {
+  display: grid;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+
+  border: 1px solid rgba(147, 197, 253, 0.15);
+  border-radius: 12px;
+  background: rgba(96, 165, 250, 0.17);
+}
+
+.dashboard-layout .sidebar-footer strong {
+  color: #fff;
+  font-size: 12px;
+}
+
+.dashboard-layout .sidebar-footer p {
+  margin: 4px 0 0;
+  color: #b6c8e9;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.dashboard-layout .dashboard-main {
+  display: block;
+  width: calc(100% - var(--hirex-sidebar-width));
+  min-width: 0;
+  min-height: calc(100vh - var(--hirex-topbar-height));
+
+  margin: 0 0 0 var(--hirex-sidebar-width);
+  padding: 0;
+
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(59, 130, 246, 0.07),
+      transparent 30%
+    ),
+    var(--hirex-bg);
+}
+
+.dashboard-layout .dashboard-page-content {
+  width: 100%;
+  max-width: 1650px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 32px clamp(20px, 3vw, 44px);
+}
+
+.dashboard-layout .dashboard-mobile-heading {
+  display: none;
+}
+
+/* DASHBOARD TYPOGRAPHY */
+
+.dashboard-layout .dashboard-main h1 {
+  color: #142347;
+  font-size: clamp(25px, 2.2vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.25;
+}
+
+.dashboard-layout .dashboard-main h2 {
+  color: #172554;
+  font-weight: 750;
+}
+
+.dashboard-layout .dashboard-main p {
+  line-height: 1.65;
+}
+
+/* OVERRIDE OLD DASHBOARD STYLES */
+
+.dashboard-layout .dashboard-page-content .dashboard.dashboard-home {
+  display: block;
+  width: 100%;
+  min-height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-layout .dashboard-page-content .dashboard-content {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (min-width: 651px) and (max-width: 900px) {
+  :root {
+    --hirex-sidebar-width: 220px;
+  }
+
+  .dashboard-layout .dashboard-sidebar {
+    padding: 23px 11px 16px;
+  }
+
+  .dashboard-layout .dashboard-brand {
+    margin-bottom: 28px;
+    font-size: 27px;
+  }
+
+  .dashboard-layout .dashboard-menu-link {
+    gap: 9px;
+    padding: 11px 10px;
+    font-size: 12px;
+  }
+
+  .dashboard-layout .dashboard-page-content {
+    padding: 25px 19px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+  :root {
+    --hirex-topbar-height: 60px;
+  }
+
+  .dashboard-layout {
+    min-height: calc(100dvh - var(--hirex-topbar-height));
+  }
+
+  .dashboard-layout .dashboard-sidebar {
+    position: sticky;
+    top: var(--hirex-topbar-height);
+    left: auto;
+    bottom: auto;
+    z-index: 1000;
+
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 10px 12px 4px;
+
+    overflow: visible;
+  }
+
+  .dashboard-layout .dashboard-sidebar > .dashboard-brand,
+  .dashboard-layout .dashboard-sidebar > .sidebar-label,
+  .dashboard-layout .dashboard-sidebar > .sidebar-footer {
+    display: none;
+  }
+
+  .dashboard-layout .dashboard-menu {
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: 7px;
+
+    width: 100%;
+    min-height: 0;
+    padding: 2px 1px 8px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-layout .dashboard-menu-link {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 40px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .dashboard-layout .dashboard-menu-icon {
+    flex-basis: auto;
+    font-size: 15px;
+  }
+
+  .dashboard-layout .dashboard-main {
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .dashboard-layout .dashboard-page-content {
+    padding: 22px 14px;
+  }
+
+  .dashboard-layout .dashboard-mobile-heading {
+    display: block;
+    padding: 13px 16px 0;
+  }
+
+  .dashboard-layout .dashboard-mobile-heading .dashboard-brand {
+    margin: 0;
+    color: var(--hirex-text);
+    font-size: 24px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-layout .dashboard-menu-link {
+    transition: none;
+  }
+}/* NAVBAR + SIDEBAR ALIGNMENT FIX */
+
+:root {
+  --hirex-topbar-height: 70px;
+}
+
+.dashboard-layout {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.dashboard-layout .dashboard-sidebar {
+  position: fixed;
+  top: var(--hirex-topbar-height);
+  left: 0;
+  bottom: 0;
+  height: calc(100dvh - var(--hirex-topbar-height));
+}
+
+.dashboard-layout .dashboard-main {
+  margin-top: 0;
+  margin-left: var(--hirex-sidebar-width);
+  width: calc(100% - var(--hirex-sidebar-width));
+}
+
+@media (max-width: 650px) {
+  .dashboard-layout .dashboard-sidebar {
+    position: sticky;
+    top: 70px;
+    width: 100%;
+    height: auto;
+  }
+
+  .dashboard-layout .dashboard-main {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+/* ===== FINAL NAVBAR + SIDEBAR SCROLL FIX ===== */
+
+.hirex-navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: 70px !important;
+  min-height: 70px !important;
+  z-index: 9999 !important;
+  margin: 0 !important;
+}
+
+/* Layout starts below navbar */
+.dashboard-layout {
+  position: relative !important;
+  padding-top: 70px !important;
+  margin: 0 !important;
+  min-height: 100vh;
+  overflow: visible !important;
+}
+
+/* Sidebar stays directly below navbar */
+.dashboard-layout .dashboard-sidebar {
+  position: fixed !important;
+  top: 70px !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 255px !important;
+  height: calc(100dvh - 70px) !important;
+  margin: 0 !important;
+  z-index: 1000 !important;
+  overflow: hidden !important;
+}
+
+/* Only menu scrolls inside sidebar */
+.dashboard-layout .dashboard-menu {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Main content */
+.dashboard-layout .dashboard-main {
+  width: calc(100% - 255px) !important;
+  min-height: calc(100vh - 70px) !important;
+  margin: 0 0 0 255px !important;
+  padding: 0 !important;
+}
+
+@media (max-width: 900px) and (min-width: 651px) {
+  .dashboard-layout .dashboard-sidebar {
+    width: 220px !important;
+  }
+
+  .dashboard-layout .dashboard-main {
+    width: calc(100% - 220px) !important;
+    margin-left: 220px !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .hirex-navbar {
+    height: 60px !important;
+    min-height: 60px !important;
+  }
+
+  .dashboard-layout {
+    padding-top: 60px !important;
+  }
+
+  .dashboard-layout .dashboard-sidebar {
+    position: sticky !important;
+    top: 60px !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-layout .dashboard-main {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+/* =====================================
+   HIREX PREMIUM DARK GRADIENT SIDEBAR
+===================================== */
+
+.dashboard-layout .dashboard-sidebar {
+  background:
+    radial-gradient(
+      ellipse at 10% 5%,
+      rgba(14, 165, 233, 0.24),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 90% 90%,
+      rgba(37, 99, 235, 0.28),
+      transparent 40%
+    ),
+    linear-gradient(
+      160deg,
+      #080f25 0%,
+      #101e42 48%,
+      #123d78 100%
+    ) !important;
+
+  border-right: 1px solid rgba(148, 197, 255, 0.12);
+  box-shadow: 8px 0 30px rgba(5, 15, 40, 0.18) !important;
+  color: #ffffff !important;
+}
+
+/* BRAND */
+
+.dashboard-layout .dashboard-brand {
+  color: #ffffff !important;
+  font-size: 31px;
+  font-weight: 850;
+  letter-spacing: -1.5px;
+  margin-bottom: 38px !important;
+}
+
+.dashboard-layout .dashboard-brand span {
+  color: #22d3ee !important;
+}
+
+/* SECTION LABEL */
+
+.dashboard-layout .sidebar-label {
+  color: #60a5fa !important;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+/* MENU */
+
+.dashboard-layout .dashboard-menu {
+  gap: 8px !important;
+  scrollbar-color: #315b91 transparent;
+}
+
+.dashboard-layout .dashboard-menu-link {
+  position: relative;
+  color: #c4d5f2 !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 12px !important;
+  min-height: 47px;
+  padding: 12px 13px !important;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+/* HOVER */
+
+.dashboard-layout .dashboard-menu-link:hover {
+  color: #ffffff !important;
+  background: rgba(96, 165, 250, 0.13) !important;
+  border-color: rgba(125, 190, 255, 0.15) !important;
+  transform: translateX(4px);
+}
+
+/* ACTIVE */
+
+.dashboard-layout .dashboard-menu-link.active {
+  color: #ffffff !important;
+  background: linear-gradient(
+    110deg,
+    #087cf0 0%,
+    #0891b2 100%
+  ) !important;
+
+  border: 1px solid rgba(103, 232, 249, 0.35) !important;
+  box-shadow:
+    0 7px 22px rgba(6, 182, 212, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* ICONS */
+
+.dashboard-layout .dashboard-menu-icon {
+  font-size: 18px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* FOOTER CARD */
+
+.dashboard-layout .sidebar-footer {
+  margin-top: 14px !important;
+  padding: 17px 10px 8px !important;
+  border-top: 1px solid rgba(148, 197, 255, 0.16) !important;
+}
+
+.dashboard-layout .sidebar-footer-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(14, 165, 233, 0.3),
+    rgba(37, 99, 235, 0.35)
+  ) !important;
+  border: 1px solid rgba(125, 211, 252, 0.22) !important;
+}
+
+.dashboard-layout .sidebar-footer strong {
+  color: #ffffff !important;
+  font-size: 13px;
+}
+
+.dashboard-layout .sidebar-footer p {
+  color: #a9c5e9 !important;
+}
+
+/* FOCUS */
+
+.dashboard-layout .dashboard-menu-link:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 3px;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  .dashboard-layout .dashboard-sidebar {
+    background: linear-gradient(
+      110deg,
+      #101b3d,
+      #123d78
+    ) !important;
+  }
+
+  .dashboard-layout .dashboard-menu-link {
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  .dashboard-layout .dashboard-menu-link.active {
+    background: linear-gradient(
+      110deg,
+      #087cf0,
+      #06b6d4
+    ) !important;
+  }
+}
+
+/* =====================================
+   HIREX - CLEAN SIDEBAR (NO SCROLLBAR)
+===================================== */
+
+@media (min-width: 651px) {
+  .dashboard-layout .dashboard-sidebar {
+    padding: 22px 14px 16px !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard-layout .dashboard-brand {
+    margin: 0 12px 25px !important;
+  }
+
+  .dashboard-layout .sidebar-label {
+    margin-bottom: 12px !important;
+  }
+
+  /* Remove internal scrolling */
+  .dashboard-layout .dashboard-menu {
+    flex: 0 0 auto !important;
+    gap: 5px !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 0 3px !important;
+
+    overflow: visible !important;
+    scrollbar-width: none !important;
+  }
+
+  .dashboard-layout .dashboard-menu::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Compact menu items */
+  .dashboard-layout .dashboard-menu-link {
+    min-height: 44px !important;
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+    transform: none;
+  }
+
+  .dashboard-layout .dashboard-menu-link:hover {
+    transform: translateX(3px);
+  }
+
+  .dashboard-layout .sidebar-footer {
+    margin-top: auto !important;
+    padding-top: 14px !important;
+  }
+}
+
+/* Short laptop screens */
+@media (min-width: 651px) and (max-height: 700px) {
+  .dashboard-layout .dashboard-sidebar {
+    padding-top: 14px !important;
+  }
+
+  .dashboard-layout .dashboard-brand {
+    margin-bottom: 14px !important;
+  }
+
+  .dashboard-layout .dashboard-menu {
+    gap: 2px !important;
+  }
+
+  .dashboard-layout .dashboard-menu-link {
+    min-height: 39px !important;
+    padding: 8px 11px !important;
+  }
+
+  .dashboard-layout .sidebar-footer {
+    padding-top: 8px !important;
+  }
+}
+
+/* =====================================
+   HIREX SIDEBAR - BACKGROUND PATCH FIX
+===================================== */
+
+/* Smooth continuous sidebar background */
+.dashboard-layout .dashboard-sidebar {
+  background:
+    radial-gradient(
+      ellipse at 15% 15%,
+      rgba(37, 99, 235, 0.30),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 85% 85%,
+      rgba(6, 182, 212, 0.18),
+      transparent 42%
+    ),
+    linear-gradient(
+      145deg,
+      #101d3d 0%,
+      #142b55 50%,
+      #123d70 100%
+    ) !important;
+}
+
+/* Remove dark rectangular menu background */
+.dashboard-layout .dashboard-menu {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Remove menu pseudo backgrounds */
+.dashboard-layout .dashboard-menu::before,
+.dashboard-layout .dashboard-menu::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Keep links transparent */
+.dashboard-layout .dashboard-menu-link {
+  background: transparent !important;
+  box-shadow: none;
+}
+
+/* Premium active link */
+.dashboard-layout .dashboard-menu-link.active {
+  background: linear-gradient(
+    110deg,
+    #087cf0,
+    #06b6d4
+  ) !important;
+
+  box-shadow:
+    0 6px 18px rgba(6, 182, 212, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Footer blends with sidebar */
+.dashboard-layout .sidebar-footer {
+  background: transparent !important;
+}
+
+

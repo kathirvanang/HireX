@@ -10,8 +10,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from resumes.models import Resume, ResumeAnalysis
-from .models import Job
-from .serializers import JobSerializer
+from .models import Job, JobMatchHistory
+from .serializers import JobSerializer 
 
 
 # Normalize skill names for consistent matching
@@ -223,6 +223,14 @@ def match_job(request, job_id):
         job,
         get_resume_skills(analysis),
     )
+    JobMatchHistory.objects.create(
+    user=request.user,
+    job=job,
+    resume=resume,
+    match_score=match_details["match_score"],
+    matched_skills=match_details["matched_skills"],
+    missing_skills=match_details["missing_skills"],
+     )
 
     return Response({
         "job_id": job.id,
@@ -258,6 +266,7 @@ def skill_gap_analysis(request, job_id):
         job,
         get_resume_skills(analysis),
     )
+    
 
     return Response({
         "job_id": job.id,
@@ -266,3 +275,53 @@ def skill_gap_analysis(request, job_id):
         "resume_id": resume.id,
         **match_details,
     })
+
+# GET: Retrieve the logged-in user's job match history
+@api_view(["GET"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def job_match_history(request):
+    history = (
+        JobMatchHistory.objects
+        .filter(user=request.user)
+        .select_related("job", "resume")
+        .order_by("-created_at")
+    )
+
+    results = []
+
+    for item in history:
+        results.append({
+            "id": item.id,
+            "job_id": item.job.id,
+            "job_title": item.job.title,
+            "company": item.job.company,
+            "resume_id": item.resume.id,
+            "match_score": item.match_score,
+            "matched_skills": item.matched_skills,
+            "missing_skills": item.missing_skills,
+            "created_at": item.created_at,
+        })
+
+    return Response({
+        "count": len(results),
+        "results": results,
+    })
+
+# DELETE: Remove a job match history record
+@api_view(["DELETE"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def delete_job_match_history(request, history_id):
+    history = get_object_or_404(
+        JobMatchHistory,
+        id=history_id,
+        user=request.user,
+    )
+
+    history.delete()
+
+    return Response(
+        {"message": "Job match history deleted successfully."},
+        status=status.HTTP_200_OK,
+    )

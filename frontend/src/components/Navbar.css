@@ -1,0 +1,193 @@
+.hirex-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+
+  width: 100%;
+  height: 70px;
+  padding: 0 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+}
+
+.navbar-logo {
+  color: #101b3d;
+  font-size: 27px;
+  font-weight: 850;
+  letter-spacing: -1px;
+  text-decoration: none;
+}
+
+.navbar-logo span {
+  color: #06b6d4;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.navbar-links a {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.navbar-links a:hover {
+  color: #0891b2;
+}
+
+.navbar-logout {
+  padding: 9px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navbar-logout:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 650px) {
+  .hirex-navbar {
+    height: 60px;
+    padding: 0 15px;
+  }
+
+  .navbar-logo {
+    font-size: 23px;
+  }
+
+  .navbar-links {
+    gap: 12px;
+  }
+
+  .navbar-links a,
+  .navbar-logout {
+    font-size: 12px;
+  }
+}
+
+.hirex-navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  min-height: 70px;
+  z-index: 1100;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* =====================================
+   HIREX PREMIUM DARK BLUE NAVBAR
+===================================== */
+
+.hirex-navbar {
+  background:
+    radial-gradient(
+      ellipse at 15% 0%,
+      rgba(37, 99, 235, 0.22),
+      transparent 45%
+    ),
+    linear-gradient(
+      120deg,
+      #080f25 0%,
+      #101e42 50%,
+      #123d78 100%
+    ) !important;
+
+  border-bottom: 1px solid rgba(148, 197, 255, 0.15);
+  box-shadow: 0 5px 22px rgba(5, 15, 40, 0.22);
+}
+
+/* Navbar brand */
+.hirex-navbar a,
+.hirex-navbar .navbar-brand {
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+/* HireX X highlight */
+.hirex-navbar a span {
+  color: #22d3ee !important;
+}
+
+/* Navbar links */
+.hirex-navbar .nav-link {
+  color: #dbeafe !important;
+  transition: color 0.2s ease;
+}
+
+.hirex-navbar .nav-link:hover {
+  color: #22d3ee !important;
+}
+
+/* =====================================
+   HIREX PREMIUM SHINE ANIMATION
+===================================== */
+
+.dashboard-layout .dashboard-brand {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.3s ease;
+}
+
+.dashboard-layout .dashboard-brand::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -100%;
+  width: 45%;
+  height: 140%;
+
+  background: linear-gradient(
+    110deg,
+    transparent,
+    rgba(255, 255, 255, 0.75),
+    rgba(34, 211, 238, 0.45),
+    transparent
+  );
+
+  transform: skewX(-25deg);
+  animation: hirexShine 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.dashboard-layout .dashboard-brand span {
+  color: #22d3ee !important;
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.35);
+}
+
+.dashboard-layout .dashboard-brand:hover {
+  transform: scale(1.04);
+}
+
+@keyframes hirexShine {
+  0%, 55% {
+    left: -100%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-layout .dashboard-brand::after {
+    animation: none;
+  }
+}
